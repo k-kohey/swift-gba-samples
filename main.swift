@@ -1,3 +1,5 @@
-func main() -> Int {
-    return 1
+@main
+struct Main {
+    static func main() {
+    }
 }

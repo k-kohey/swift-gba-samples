@@ -10,22 +10,24 @@ SC = $(TOOLCHAIN)/swiftc
 CC = $(BIN)/clang
 SYSROOT = $(GBA_LLVM)/lib/clang-runtimes/arm-none-eabi/armv4t
 GBAFIX = $(BIN)/gbafix
-CFLAGS = -O3 -mthumb -mfpu=none -fno-exceptions -fno-rtti -D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABOR
-SWIFT_FLAGS = -Onone -wmo -enable-experimental-feature Embedded -target armv4t-none-none-eabi -use-ld=lld
+CFLAGS = -O3 -mthumb -mfpu=none -fno-exceptions -fno-rtti -D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABORT
+SWIFT_FLAGS = -Onone -wmo -enable-experimental-feature Embedded -target armv4t-none-none-eabi
 SWIFT_FILES = $(NAME).swift
+OBJ_FILES = $(NAME).o
 LFLAGS = -lcrt0-gba
-CLANG_LINKER = --sysroot=$(SYSROOT) -T gba_cart.ld
+CLANG_LINKER_FLAGS = --sysroot=$(SYSROOT) -T gba_cart.ld
 
 $(NAME).gba: $(NAME).elf
 	$(BIN)/llvm-objcopy -O binary $^ $@
 	$(GBAFIX) $@
 
-$(NAME).elf: $(SWIFT_FILES)
-	$(SC) -o $@ $^ $(SWIFT_FLAGS) $(addprefix -Xlinker , $(LFLAGS)) \
-		$(addprefix -Xcc , $(CFLAGS)) \
-		$(addprefix -Xclang-linker , $(CLANG_LINKER))
+$(NAME).elf: $(OBJ_FILES)
+	$(CC) -o $@ $^ -O3 -mthumb --config armv4t-gba.cfg -Wl,-T,gba_cart.ld
+
+$(NAME).o: $(SWIFT_FILES)
+	$(SC) -c -o $@ $^ $(SWIFT_FLAGS) $(addprefix -Xcc , $(CFLAGS)) -parse-as-library ーXclang-linker -nostdlib
 
 .PHONY: clean
 
 clean:
-	rm $(NAME).elf $(NAME).gba
+	rm -f $(NAME).o $(NAME).elf $(NAME).gba
