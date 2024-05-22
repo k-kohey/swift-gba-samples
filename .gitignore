@@ -3,4 +3,6 @@
 *.o
 *.sav
 *.bc
+.swiftpm
+.build
 .vscode
