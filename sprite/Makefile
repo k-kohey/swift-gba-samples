@@ -6,14 +6,14 @@ NAME = my_game
 BIN = $(GBA_LLVM)/bin
 SC = $(TOOLCHAIN)/swiftc
 CC = $(BIN)/clang
-SWIFT_FLAGS = -wmo -enable-experimental-feature Embedded -target armv4t-none-none-eabi -parse-as-library -import-objc-header Bridging-Header.h -I$(SYSROOT)/include -Xfrontend -internalize-at-link -lto=llvm-thin -Xfrontend -disable-stack-protector -Xfrontend -disable-objc-interop -g
-CFLAGS = -mthumb -mfpu=none -fno-exceptions -fno-rtti -D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABORT -fshort-enums -g
+SWIFT_FLAGS = -wmo -enable-experimental-feature Embedded -target armv4t-none-none-eabi -parse-as-library -import-objc-header Bridging-Header.h -I$(SYSROOT)/include -Xfrontend -internalize-at-link -lto=llvm-thin  -Xfrontend -disable-stack-protector -Xfrontend -disable-objc-interop
+CFLAGS = -mthumb -mfpu=none -fno-exceptions -fno-rtti -D_LIBCPP_AVAILABILITY_HAS_NO_VERBOSE_ABORT -fshort-enums
 SYSROOT = $(GBA_LLVM)/lib/clang-runtimes/arm-none-eabi/armv4t
-LFLAGS = -lcrt0-gba -ltonc -lc
+LFLAGS = -lcrt0-gba -ltonc
 CLANG_LINKER_FLAGS = -T gba_cart.ld --sysroot $(SYSROOT) -fuse-ld=lld
 
 SWIFT_FILES = $(wildcard Sources/swift-gba/*.swift)
-C_FILES = $(wildcard *.c)
+C_FILES = $(wildcard asset/*.c)
 C_OBJ_FILES = $(C_FILES:.c=.o)
 SWIFT_OBJ_FILES = $(SWIFT_FILES:.swift=.o)
 
@@ -34,7 +34,6 @@ $(NAME).elf: $(SWIFT_FILES) $(C_OBJ_FILES)
 
 .PHONY:
 run: $(NAME).gba
-	make clean
 	make
 	mGBA $<
 

@@ -2,7 +2,7 @@
 
 import PackageDescription
 
-let GBA_LLVM = "../Downloads/gba-llvm-devkit-1-Darwin-arm64"
+let GBA_LLVM = "../../Downloads/gba-llvm-devkit-1-Darwin-arm64"
 let SYSROOT = "\(GBA_LLVM)/lib/clang-runtimes/arm-none-eabi/armv4t"
 
 let package = Package(
@@ -34,8 +34,6 @@ let package = Package(
                         "-parse-as-library",
                         "-I\(SYSROOT)/include",
                         "-Xfrontend", "-internalize-at-link", "-lto=llvm-thin",
-                        "-Xfrontend", "-disable-stack-protector",
-                        "-Xfrontend", "-disable-objc-interop",
                         "-import-objc-header", "Bridging-Header.h"
                     ]
                 )

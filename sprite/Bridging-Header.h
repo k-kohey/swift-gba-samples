@@ -4,4 +4,5 @@
 #include "tonc_libgba.h"
 #include "tonc_types.h"
 
-#include "character.h"
+#include "asset/character.h"
+#include "asset/background.h"
