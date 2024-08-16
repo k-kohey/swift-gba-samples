@@ -41,7 +41,9 @@ final class ScreenWriter {
 
     init() {
         let displayControl = UnsafeMutablePointer<UInt32>(bitPattern: 0x4000000)!
-        displayControl.pointee = 0x403
+        let displayMode3: UInt32 = 0x3
+        let enableBackground2: UInt32 = 0x400
+        displayControl.pointee = displayMode3 | enableBackground2
     }
 
     func draw(_ color: Color, at origin: Position, size: Size) {

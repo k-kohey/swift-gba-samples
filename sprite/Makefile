@@ -32,7 +32,6 @@ $(NAME).elf: $(SWIFT_FILES) $(C_OBJ_FILES)
 %.o: %.c
 	$(CC) $< -o $@ -O3 -mthumb --config armv4t-gba.cfg -c
 
-.PHONY:
 run: $(NAME).gba
 	make
 	mGBA $<

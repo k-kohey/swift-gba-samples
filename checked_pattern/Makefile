@@ -21,13 +21,12 @@ $(NAME).gba: $(NAME).elf
 	$(BIN)/llvm-objcopy -O binary $^ $@
 	$(BIN)/gbafix $@
 
-$(NAME).elf: $(SWIFT_FILES) $(C_OBJ_FILES)
-	$(SC) -o $@ $(SWIFT_FILES) $(C_OBJ_FILES) \
+$(NAME).elf: $(SWIFT_FILES)
+	$(SC) -o $@ $(SWIFT_FILES) \
 		$(SWIFT_FLAGS) $(addprefix -Xcc , $(CFLAGS)) \
 		$(addprefix -Xlinker , $(LFLAGS)) \
 		$(addprefix -Xclang-linker , $(CLANG_LINKER_FLAGS))
 
-.PHONY:
 run: $(NAME).gba
 	make
 	mGBA $<
