@@ -1,2 +1,2 @@
-@ _cdecl("stdout")
-func stdout() {}
+@_silgen_name("stdout")
+let stdout: UnsafeMutableRawPointer? = nil
