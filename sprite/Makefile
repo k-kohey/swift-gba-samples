@@ -1,5 +1,5 @@
 GBA_LLVM ?= ../../Downloads/gba-llvm-devkit-1-Darwin-arm64
-TOOLCHAIN ?= /Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2024-04-22-a.xctoolchain/usr/bin
+TOOLCHAIN ?= /Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2024-08-26-a.xctoolchain/usr/bin
 
 NAME = my_game
 

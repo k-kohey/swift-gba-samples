@@ -43,7 +43,6 @@ final class Charcter {
 
         oam_init(objBuffer, 128)
         obj_set_attr(&objBuffer[0], .init(ATTR0_SQUARE), .init(ATTR1_SIZE_32), ATTR2_PALBANK(0))
-        obj_set_pos(&objBuffer[0], x, y)
         objBuffer[0].attr2 = ATTR2_BUILD(0, 0, 0)
     }
 
@@ -51,7 +50,7 @@ final class Charcter {
         x += tx
         y += ty
         obj_set_pos(&objBuffer[0], x, y)
-        oam_copy(Mem.oam, objBuffer, 1)
+        Mem.oam.update(from: &objBuffer[0], count: 2)
     }
 }
 
